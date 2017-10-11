@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Custom
+teacher.pth
+student.pth
+data/**
+data/*
+
