@@ -33,11 +33,11 @@ Remarks:
 
 The results obtained by distilling a LeNet-teacher (converged) into a LeNet-student with the same random architecture. The results are in the form `train / test` at the 100th epoch of training.
 
-Vanilla    | Sobolev
------------|------------
-1.2 / 1.19 | 0.56 / 0.64
-0.94 / 0.9 | 0.8 / 0.82
-0.7 / 0.72 | 0.7 / 0.72
-n / a      | 2e-4 / 4e-4
+Metric        |  Vanilla    | Sobolev
+--------------|-------------|------------
+Distill. Loss |  1.2 / 1.19 | 0.56 / 0.64
+Student Loss  |  0.94 / 0.9 | 0.8 / 0.82
+Teacher Loss  |  0.7 / 0.72 | 0.7 / 0.72
+Sobolev Loss  |  n / a      | 2e-4 / 4e-4
 
 
