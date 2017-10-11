@@ -11,7 +11,7 @@ from torchvision import transforms
 from lenet import LeNet
 from sobolev import SobolevLoss
 
-USE_SOBOLEV = True
+USE_SOBOLEV = False
 
 student = LeNet()
 teacher = LeNet()
@@ -31,31 +31,23 @@ transform_test = transforms.Compose([
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
 ])
 
-trainset = tv.datasets.CIFAR10(root='./data',
-                               train=True,
-                               download=True,
-                               transform=transform_train)
-trainloader = th.utils.data.DataLoader(trainset,
-                                       batch_size=128,
-                                       shuffle=True,
-                                       num_workers=2)
+trainset = tv.datasets.CIFAR10(
+    root='./data', train=True, download=True, transform=transform_train)
+trainloader = th.utils.data.DataLoader(
+    trainset, batch_size=128, shuffle=True, num_workers=2)
 
-testset = tv.datasets.CIFAR10(root='./data',
-                              train=False,
-                              download=True,
-                              transform=transform_test)
-testloader = th.utils.data.DataLoader(testset,
-                                      batch_size=100,
-                                      shuffle=False,
-                                      num_workers=2)
+testset = tv.datasets.CIFAR10(
+    root='./data', train=False, download=True, transform=transform_test)
+testloader = th.utils.data.DataLoader(
+    testset, batch_size=100, shuffle=False, num_workers=2)
 
 label_loss = nn.CrossEntropyLoss()
 distillation_loss = nn.MSELoss()
 sobolev = SobolevLoss(weight=0.1)
-s_opt = optim.SGD(student.parameters(),
-                  lr=0.01, momentum=0.9, weight_decay=5e-4)
-t_opt = optim.SGD(teacher.parameters(),
-                  lr=0.01, momentum=0.9, weight_decay=5e-4)
+s_opt = optim.SGD(
+    student.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
+t_opt = optim.SGD(
+    teacher.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
 
 # Train
 for epoch in range(100):

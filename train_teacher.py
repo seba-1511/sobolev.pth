@@ -47,12 +47,13 @@ testloader = th.utils.data.DataLoader(testset,
 label_loss = nn.CrossEntropyLoss()
 t_opt = optim.SGD(teacher.parameters(),
                   lr=0.01, momentum=0.9, weight_decay=5e-4)
-scheduler = optim.lr_scheduler.MultiStepLR(t_opt, milestones=[100, 150])
 
 # Train
-for epoch in range(100):
+for epoch in range(200):
     epoch_teacher = 0.0
-    scheduler.step()
+    if epoch == 100 or epoch == 150:
+        for group in t_opt.param_groups:
+            group['lr'] *= 0.1
     for X, y in trainloader:
         X, y = V(X.cuda()), V(y.cuda())
         t_preds = teacher(X)
